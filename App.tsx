@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 
 import { theme } from './app/static/theme';
 import MainNavigation from './navigation/MainNavigation';
+
 export default function App() {
   return (
     <>
