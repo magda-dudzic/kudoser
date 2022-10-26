@@ -7,17 +7,17 @@ import SafeArea from '../components/atoms/SafeArea';
 
 const MOCK_RANKING_DATA = [
   {
-    name: 'Magda',
+    name: 'Philippa',
     pointsThisMonth: 120,
     pointsInTotal: 700,
   },
   {
     name: 'Sami',
     pointsThisMonth: 130,
-    pointsInTotal: 660,
+    pointsInTotal: 860,
   },
   {
-    name: 'Philippa',
+    name: 'Magda',
     pointsThisMonth: 800,
     pointsInTotal: 9900,
   },
