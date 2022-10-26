@@ -5,6 +5,7 @@ import React from 'react';
 
 import Account from '../app/screens/Account';
 import Home from '../app/screens/Home';
+import Ranking from '../app/screens/Ranking';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,7 +24,15 @@ export default function MainNavigation() {
         <Tab.Screen
           name="Home"
           component={Home}
-          options={{ tabBarIcon: HomeOptions, headerShown: false }}
+          options={{
+            tabBarIcon: HomeOptions,
+            headerShown: false,
+          }}
+        />
+        <Tab.Screen
+          name="Ranking"
+          component={Ranking}
+          options={{ tabBarIcon: AccountOptions, headerShown: false }}
         />
         <Tab.Screen
           name="Account"
