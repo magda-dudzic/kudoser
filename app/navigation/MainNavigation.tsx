@@ -3,10 +3,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 
-import Account from '../app/screens/Account';
-import Home from '../app/screens/Home';
-import Ranking from '../app/screens/Ranking';
-import { colors } from '../app/static/theme/colors';
+import Account from '../screens/Account';
+import Home from '../screens/Home';
+import Ranking from '../screens/Ranking';
+import { colors } from '../static/theme/colors';
 
 const Tab = createBottomTabNavigator();
 
