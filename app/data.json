@@ -1,0 +1,23 @@
+[
+    {
+        "slug": "kudos-1",
+        "user": "Sami",
+        "colleague": "Magda",
+        "points": "30",
+        "message": "SSH Lover"
+    },
+    {
+        "slug": "kudos-2",
+        "user": "Sami",
+        "colleague": "Magda",
+        "points": "40",
+        "message": "Can handle working with me for more than 10 minutes!"
+    },
+    {
+        "slug": "kudos-3",
+        "user": "Sami",
+        "colleague": "Nathan Channon",
+        "points": "10",
+        "message": "Does not lose after 3 moves of chess"
+    }
+]
