@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Picker } from '@react-native-picker/picker';
+import { Picker as SelectPicker } from '@react-native-picker/picker';
 import React, { useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 
@@ -35,13 +35,13 @@ export default function Ranking() {
     <SafeArea>
       <Text style={styles.heading}>Ranking</Text>
 
-      <Picker
+      <SelectPicker
         selectedValue={sortBy}
         onValueChange={(value: string) => setSortBy(value)}
       >
-        <Picker.Item label="Last 30 days" value="pointsThisMonth" />
-        <Picker.Item label="In total" value="pointsInTotal" />
-      </Picker>
+        <SelectPicker.Item label="Last 30 days" value="pointsThisMonth" />
+        <SelectPicker.Item label="In total" value="pointsInTotal" />
+      </SelectPicker>
 
       <FlatList
         data={MOCK_RANKING_DATA.sort((a, b) => b[sortBy] - a[sortBy])}
