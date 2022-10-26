@@ -6,11 +6,16 @@ import React from 'react';
 import Account from '../screens/Account';
 import Home from '../screens/Home';
 import Ranking from '../screens/Ranking';
+import { colors } from '../static/theme/colors';
 
 const Tab = createBottomTabNavigator();
 
 const HomeOptions = ({ size, color }: { size: number; color: string }) => {
   return <Ionicons name="md-home" size={size} color={color} />;
+};
+
+const RankingOptions = ({ size, color }: { size: number; color: string }) => {
+  return <Ionicons name="stats-chart" size={size} color={color} />;
 };
 
 const AccountOptions = ({ size, color }: { size: number; color: string }) => {
@@ -26,13 +31,13 @@ export default function MainNavigation() {
           component={Home}
           options={{
             tabBarIcon: HomeOptions,
-            headerShown: false,
+            tabBarActiveTintColor: colors.primaryLight,
           }}
         />
         <Tab.Screen
           name="Ranking"
           component={Ranking}
-          options={{ tabBarIcon: AccountOptions, headerShown: false }}
+          options={{ tabBarIcon: RankingOptions, headerShown: false }}
         />
         <Tab.Screen
           name="Account"
