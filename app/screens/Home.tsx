@@ -1,12 +1,13 @@
 import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { FlatList, View } from 'react-native';
+import slugify from 'slugify';
 
 import SafeArea from '../components/atoms/SafeArea';
-import KudosForm from '../components/molecules/KudosForm';
+import KudosForm, { KudosFormData } from '../components/molecules/KudosForm';
 import KudosItem from '../components/molecules/KudosItem';
 import { Kudos } from '../models/Kudos';
-import { getKudos } from '../storage/kudos';
+import { getKudos, storeKudos } from '../storage/kudos';
 
 export default function Home() {
   const [kudos, setKudos] = useState<Kudos[]>([]);
@@ -24,10 +25,26 @@ export default function Home() {
     }
   }, [refresh, isFocused]);
 
+  const handleKudosFormSubmit = async (form: KudosFormData) => {
+    const newKudos: Kudos = {
+      slug: slugify(form.user + ' ' + Date.now(), { lower: true }),
+      user: form.user,
+      colleague: form.colleague,
+      points: Number(form.points),
+      message: form.message,
+    };
+    await storeKudos(newKudos);
+  };
+
   return (
     <SafeArea>
       <View>
-        <KudosForm onSubmit={() => {}} />
+        <KudosForm
+          onSubmit={async (data) => {
+            await handleKudosFormSubmit(data);
+            setRefresh(true);
+          }}
+        />
       </View>
       <View>
         <FlatList
