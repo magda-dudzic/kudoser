@@ -1,8 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Pressable, StyleSheet, View, ScrollView } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import { Text, TextInput, Button } from "@react-native-material/core";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export type KudosFormData = {
   user: string;

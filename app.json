@@ -7,8 +7,8 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/Cambium_Logo.png",
-      "resizeMode": "contain",
+      "image": "./assets/cambium-logo2.png",
+      "resizeMode": "center",
       "backgroundColor": "#ff"
     },
     "updates": {
