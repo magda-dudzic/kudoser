@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
+import React, { useRef, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { Pressable, StyleSheet, View, ScrollView } from "react-native";
+import RNPickerSelect from "react-native-picker-select";
+import { Text, TextInput, Button } from "@react-native-material/core";
 
 export type KudosFormData = {
   user: string;
@@ -13,25 +14,28 @@ export type KudosFormData = {
 type KudosFormProps = { onSubmit: (form: KudosFormData) => void };
 
 const KudosValues = [
-  { value: 10, label: '10 Kudos Points!' },
-  { value: 20, label: '20 Kudos Points!' },
-  { value: 30, label: '30 Kudos Points!' },
+  { value: 10, label: "10 Kudos" },
+  { value: 20, label: "20 Kudos" },
+  { value: 30, label: "30 Kudos" },
 ];
 
 const Users = [
-  { value: 'Magda', label: 'Magda' },
-  { value: 'Nathan Channon', label: 'Nathan Channon' },
-  { value: 'Sami', label: 'Sami' },
+  { value: "Magda", label: "Magda" },
+  { value: "Nathan C", label: "Nathan C" },
+  { value: "Sami", label: "Sami" },
+  { value: "Pip", label: "Pip" },
 ];
 
 export default function KudosForm({ onSubmit }: KudosFormProps) {
   const { control, handleSubmit } = useForm();
-  const [isSelectionOn, setIsSelectionOn] = useState(true);
+
+  const kudosInputRef = useRef();
+  const messageInputRef = useRef();
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text style={styles.formTitle}>
-        Give Kudos to your favorite colleagues!!!
+        Give Kudos to your favorite colleagues!
       </Text>
       <View style={styles.rowContainer}>
         <Controller
@@ -39,29 +43,19 @@ export default function KudosForm({ onSubmit }: KudosFormProps) {
           rules={{ required: true }}
           name="colleague"
           render={({ field: { onChange, value } }) => (
-            <View style={styles.input}>
-              {isSelectionOn ? (
-                <View>
-                  <RNPickerSelect
-                    items={Users}
-                    style={pickerSelectStyles}
-                    placeholder={{
-                      value: null,
-                      label: 'Your beloved colleague!',
-                    }}
-                    onValueChange={(value) => {
-                      onChange(value);
-                    }}
-                  />
-                </View>
-              ) : (
-                <TextInput
-                  onPressIn={() => setIsSelectionOn(true)}
-                  value={value}
-                  placeholder=""
-                  placeholderTextColor={'rgba(0,0,0,0.4)'}
+            <View style={styles.select}>
+              <View>
+                <RNPickerSelect
+                  items={Users}
+                  style={pickerSelectStyles}
+                  placeholder={{
+                    label: "Who's deserved some Kudos?",
+                  }}
+                  onValueChange={(val) => {
+                    onChange(val);
+                  }}
                 />
-              )}
+              </View>
             </View>
           )}
         />
@@ -72,10 +66,13 @@ export default function KudosForm({ onSubmit }: KudosFormProps) {
           render={({ field: { onChange, value } }) => (
             <TextInput
               onChangeText={onChange}
+              variant="outlined"
+              label="Who is giving the kudos?"
               value={value}
               style={styles.input}
-              placeholder="Who is giving the kudos?"
-              placeholderTextColor={'rgba(0,0,0,0.4)'}
+              color={"#337078"}
+              returnKeyType="next"
+              onSubmitEditing={() => kudosInputRef?.current?.focus()}
             />
           )}
         />
@@ -84,30 +81,18 @@ export default function KudosForm({ onSubmit }: KudosFormProps) {
           rules={{ required: true }}
           name="points"
           render={({ field: { onChange, value } }) => (
-            <View style={styles.input}>
-              {isSelectionOn ? (
-                <View>
-                  <RNPickerSelect
-                    items={KudosValues}
-                    style={pickerSelectStyles}
-                    placeholder={{
-                      value: null,
-                      label: 'Give some Kudos points!',
-                    }}
-                    onValueChange={(value) => {
-                      onChange(value);
-                    }}
-                  />
-                </View>
-              ) : (
-                <TextInput
-                  onPressIn={() => setIsSelectionOn(true)}
-                  value={value}
-                  placeholder=""
-                  placeholderTextColor={'rgba(0,0,0,0.4)'}
-                />
-              )}
-            </View>
+            <TextInput
+              onChangeText={onChange}
+              variant="outlined"
+              label="Give some Kudos!"
+              value={value}
+              keyboardType={"number-pad"}
+              style={styles.input}
+              color={"#337078"}
+              returnKeyType="next"
+              onSubmitEditing={() => messageInputRef?.current?.focus()}
+              ref={kudosInputRef}
+            />
           )}
         />
         <Controller
@@ -117,74 +102,81 @@ export default function KudosForm({ onSubmit }: KudosFormProps) {
           render={({ field: { onChange, value } }) => (
             <TextInput
               onChangeText={onChange}
+              variant="outlined"
               multiline={true}
-              numberOfLines={4}
-              style={styles.input}
+              numberOfLines={3}
+              label="Write your message here"
               value={value}
-              placeholder="Leave a message!"
-              placeholderTextColor={'rgba(0,0,0,0.4)'}
+              style={styles.input}
+              color={"#337078"}
+              returnKeyType="send"
+              ref={messageInputRef}
             />
           )}
         />
       </View>
       <View>
-        <Pressable
+        <Button
           onPress={handleSubmit((data) => {
             onSubmit(data as KudosFormData);
           })}
+          title={"Submit"}
           style={styles.submitButton}
-        >
-          <Text>Submit</Text>
-        </Pressable>
+        />
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,
   },
   formTitle: {
-    marginBottom: 10,
+    marginVertical: 20,
+    marginHorizontal: 10,
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 20,
   },
   rowContainer: {
-    height: 200,
     marginTop: 5,
-    justifyContent: 'center',
+    justifyContent: "center",
+  },
+  select: {
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 3,
+    paddingHorizontal: 7,
+    backgroundColor: "#fff",
+    marginBottom: 10,
   },
   input: {
-    flex: 1,
-    height: 20,
-    margin: 3,
-    borderWidth: 1,
-    padding: 5,
-    borderRadius: 5,
-    borderColor: 'rgba(0,0,0,0.4)',
+    marginVertical: 5,
   },
   submitButton: {
     marginTop: 10,
+    backgroundColor: "#337078",
   },
 });
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
-    padding: 5,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderRadius: 5,
-    color: 'black',
+    color: "#337078",
+    backgroundColor: "#fff",
   },
   inputAndroid: {
-    padding: 5,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderRadius: 5,
-    color: 'black',
+    color: "black",
+    backgroundColor: "#fff",
   },
   placeholder: {
     paddingLeft: 0,
-    color: 'rgba(0,0,0,0.4)',
+    color: "#337078",
   },
 });

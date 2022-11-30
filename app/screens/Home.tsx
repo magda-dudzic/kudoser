@@ -1,13 +1,14 @@
-import { useIsFocused } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
-import { FlatList, View } from 'react-native';
-import slugify from 'slugify';
+import { useIsFocused } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { FlatList, View } from "react-native";
+import slugify from "slugify";
 
-import SafeArea from '../components/atoms/SafeArea';
-import KudosForm, { KudosFormData } from '../components/molecules/KudosForm';
-import KudosItem from '../components/molecules/KudosItem';
-import { Kudos } from '../models/Kudos';
-import { getKudos, storeKudos } from '../storage/kudos';
+import SafeArea from "../components/atoms/SafeArea";
+import KudosForm, { KudosFormData } from "../components/molecules/KudosForm";
+import KudosItem from "../components/molecules/KudosItem";
+import { Kudos } from "../models/Kudos";
+import { getKudos, storeKudos } from "../storage/kudos";
+import { ListItem } from "@react-native-material/core";
 
 export default function Home() {
   const [kudos, setKudos] = useState<Kudos[]>([]);
@@ -27,7 +28,7 @@ export default function Home() {
 
   const handleKudosFormSubmit = async (form: KudosFormData) => {
     const newKudos: Kudos = {
-      slug: slugify(form.user + ' ' + Date.now(), { lower: true }),
+      slug: slugify(form.user + " " + Date.now(), { lower: true }),
       user: form.user,
       colleague: form.colleague,
       points: Number(form.points),
@@ -39,21 +40,26 @@ export default function Home() {
   return (
     <SafeArea>
       <View>
-        <KudosForm
-          onSubmit={async (data) => {
-            await handleKudosFormSubmit(data);
-            setRefresh(true);
-          }}
-        />
-      </View>
-      <View>
         <FlatList
           data={kudos}
           keyExtractor={(item) => item.slug}
+          ListHeaderComponent={() => (
+            <KudosForm
+              onSubmit={async (data) => {
+                await handleKudosFormSubmit(data);
+                setRefresh(true);
+              }}
+            />
+          )}
           renderItem={({ item }) => {
             return (
               <View>
-                <KudosItem item={item} />
+                <ListItem
+                  title={`${item.points} kudos from ${item.user} to ${item.colleague}`}
+                  secondaryText={item.message}
+                  pressEffect={"none"}
+                  style={{ marginHorizontal: 35 }}
+                />
               </View>
             );
           }}

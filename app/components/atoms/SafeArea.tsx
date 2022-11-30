@@ -1,8 +1,8 @@
-import React from 'react';
-import { ReactNode } from 'react';
-import { SafeAreaView, StatusBar } from 'react-native';
+import React from "react";
+import { ReactNode } from "react";
+import { SafeAreaView, StatusBar } from "react-native";
 
-import { styled } from '../../static/theme';
+import { styled } from "../../static/theme";
 
 const SafeAreaStyled = styled(SafeAreaView)`
   flex: 1;

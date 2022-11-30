@@ -1,12 +1,12 @@
-import { Ionicons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
-import React from 'react';
+import { Ionicons } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import React from "react";
 
-import Account from '../screens/Account';
-import Home from '../screens/Home';
-import Ranking from '../screens/Ranking';
-import { colors } from '../static/theme/colors';
+import Account from "../screens/Account";
+import Home from "../screens/Home";
+import Ranking from "../screens/Ranking";
+import { colors } from "../static/theme/colors";
 
 const Tab = createBottomTabNavigator();
 
@@ -30,19 +30,28 @@ export default function MainNavigation() {
           name="Home"
           component={Home}
           options={{
+            headerShown: false,
             tabBarIcon: HomeOptions,
-            tabBarActiveTintColor: colors.primaryLight,
+            tabBarActiveTintColor: "#337078",
           }}
         />
         <Tab.Screen
           name="Ranking"
           component={Ranking}
-          options={{ tabBarIcon: RankingOptions, headerShown: false }}
+          options={{
+            tabBarIcon: RankingOptions,
+            headerShown: false,
+            tabBarActiveTintColor: "#337078",
+          }}
         />
         <Tab.Screen
           name="Account"
           component={Account}
-          options={{ tabBarIcon: AccountOptions, headerShown: false }}
+          options={{
+            tabBarIcon: AccountOptions,
+            headerShown: false,
+            tabBarActiveTintColor: "#337078",
+          }}
         />
       </Tab.Navigator>
     </NavigationContainer>
